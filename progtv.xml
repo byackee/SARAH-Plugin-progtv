@@ -4,25 +4,35 @@
     <tag>out.action=new Object(); </tag>
     <item weight="2">Sarah</item>
     <one-of>
-      <item>programme tv<tag>out.action.value="true";out.action.request="prog"</tag></item>
+      <item>programme tv<tag>out.action.request="prog"</tag></item>
+	  <item>liste<tag>out.action.request="liste"</tag></item>
     </one-of>
 
-<!--  Chaines @ -->
-	<item repeat="0-1" weight="1.2">
-		<one-of>
-			<item>TF1<tag>out.action.channel="TF1"</tag></item>
-			<item>France2<tag>out.action.channel="France2"</tag></item>
-			<item>France3<tag>out.action.channel="France3"</tag></item>
-			<item>M6<tag>out.action.channel="M6"</tag></item>
-		</one-of>
-  	</item>
-<!-- @	Chaines -->
-
+<!--  Channels @ -->
+  <one-of>
+    <item>ARTE<tag>out.action.channel="ART1.kazer.org"</tag></item>
+    <item>BFM TV<tag>out.action.channel="BFM1.kazer.org"</tag></item>
+    <item>CANAL+<tag>out.action.channel="CAN2.kazer.org"</tag></item>
+    <item>Direct 8<tag>out.action.channel="DIR1.kazer.org"</tag></item>
+    <item>FRANCE 2<tag>out.action.channel="FRA2.kazer.org"</tag></item>
+    <item>FRANCE 3<tag>out.action.channel="FRA3.kazer.org"</tag></item>
+    <item>FRANCE 4<tag>out.action.channel="FRA4.kazer.org"</tag></item>
+    <item>FRANCE 5<tag>out.action.channel="FRA5.kazer.org"</tag></item>
+    <item>FRANCE O<tag>out.action.channel="FRA1.kazer.org"</tag></item>
+    <item>GULLI<tag>out.action.channel="GUL1.kazer.org"</tag></item>
+    <item>I>TELE<tag>out.action.channel="ITL1.kazer.org"</tag></item>
+    <item>M6<tag>out.action.channel="M61.kazer.org"</tag></item>
+    <item>NRJ 12<tag>out.action.channel="NRJ1.kazer.org"</tag></item>
+    <item>TF1<tag>out.action.channel="TF11.kazer.org"</tag></item>
+    <item>TPS STAR<tag>out.action.channel="TPS10.kazer.org"</tag></item>
+    <item>W9<tag>out.action.channel="W91.kazer.org"</tag></item>
+  </one-of>
+<!-- @	 Channels -->
 
 	<one-of>
-		<item>ce soir<tag>out.action.time="ce soir"</tag></item>
-		<item>en ce moement<tag>out.action.time="en ce moement"</tag></item>
-		<item>demain soir<tag>out.action.time="demain soir"</tag></item>
+		<item>ce soir<tag>out.action.time="evening"</tag></item>
+		<item>maintenant<tag>out.action.time="now"</tag></item>
+		<item>demain soir<tag>out.action.time="tomorowwevening"</tag></item>
     </one-of>
 
 	

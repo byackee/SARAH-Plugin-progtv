@@ -1,8 +1,9 @@
 {
   "modules" : { 
     "progtv":     {
-      "description": "Programme tv",
-      "version"    : "1.O"
+      "description": "Programme tv avec kazer.org",
+      "version"    : "1.O",
+	  "Kazeruserkey"	   : "4cgh4dkv94d6w"
     }
   }
 }
