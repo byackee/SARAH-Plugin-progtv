@@ -1,0 +1,8 @@
+{
+  "modules" : { 
+    "progtv":     {
+      "description": "Programme tv",
+      "version"    : "1.O"
+    }
+  }
+}

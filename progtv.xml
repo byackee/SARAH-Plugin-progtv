@@ -1,0 +1,31 @@
+<grammar version="1.0" xml:lang="fr-FR" mode="voice" root="progtv" xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0">
+  <rule id="progtv" scope="public">
+    <example>Sarah donne moi le programme tv de ce soir</example>
+    <tag>out.action=new Object(); </tag>
+    <item weight="2">Sarah</item>
+    <one-of>
+      <item>programme tv<tag>out.action.value="true";out.action.request="prog"</tag></item>
+    </one-of>
+
+<!--  Chaines @ -->
+	<item repeat="0-1" weight="1.2">
+		<one-of>
+			<item>TF1<tag>out.action.channel="TF1"</tag></item>
+			<item>France2<tag>out.action.channel="France2"</tag></item>
+			<item>France3<tag>out.action.channel="France3"</tag></item>
+			<item>M6<tag>out.action.channel="M6"</tag></item>
+		</one-of>
+  	</item>
+<!-- @	Chaines -->
+
+
+	<one-of>
+		<item>ce soir<tag>out.action.time="ce soir"</tag></item>
+		<item>en ce moement<tag>out.action.time="en ce moement"</tag></item>
+		<item>demain soir<tag>out.action.time="demain soir"</tag></item>
+    </one-of>
+
+	
+    <tag>out.action._attributes.uri="http://127.0.0.1:8080/sarah/progtv";</tag>
+  </rule>
+</grammar>

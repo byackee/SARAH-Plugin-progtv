@@ -1,0 +1,27 @@
+<% stylesheet('assets/'+key+'/portlet.css') %>
+<% 
+  var myHomeCenter2 = SARAH.ConfigManager.getModule(key); 
+  var status  = myHomeCenter2.status(SARAH.ConfigManager.getConfig()); 
+%>
+
+
+<div class="logo">
+  <a href="sarah/homecenter2" class="ajax"><img src="/assets/homecenter2/images/logo.png" align="top" width="100%"></a>
+</div>
+<div> 
+<INPUT Type="BUTTON" VALUE="Home page" ONCLICK="window.location.href=''"> 
+<br>
+<br>
+<b> Informations: </b>
+  <% if (status !== 'dead') { %>
+  <br/>Connexion : <span class="status"><img src="/assets/homecenter2/images/<%= status %>.png" title="connexion etablie"></span>
+  <% } else { %>
+  <br/>Connexion : <span class="status"><img src="/assets/homecenter2/images/dead.png" title="connexion refusee"></span>  
+  <% } %>
+<!--  Modules § -->
+<BR>nombre de modules = <b>92</b></BR>
+<BR>nombre de pieces = <b>6</b></BR>
+<!-- § Modules -->
+
+</div>
+  

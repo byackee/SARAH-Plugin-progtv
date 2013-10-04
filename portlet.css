@@ -1,0 +1,19 @@
+
+.plugin-gridster.homecenter2.front {
+  background-repeat: no-repeat;
+}
+
+.plugin-gridster.homecenter2 .back {
+  background: #FFFFFF;
+}
+
+.responded {
+    color:green;
+}
+.checking,.unchecked {
+    color:#FF8C00;
+}
+.timeout {
+    color:red;
+}
+}

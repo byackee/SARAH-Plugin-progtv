@@ -1,0 +1,49 @@
+<div id="Hme Center 2">
+  <div class="row-fluid">
+    <div class="span8">
+    
+    <p>Le plugin Home Center 2 permet d'envoyer  ou d'interroger votre box domotique.</p> 
+    <p>
+      Exemple
+      <ul> 
+        <li>Allumer ou éteindre une lumiere: " SARAH, allume la lumiere du salon"</li>
+        <li>Activer une scene: SARAH, "passe en mode veille"  ou "SARAH, lance la scene xxx</li>
+        <li>demander le status d'un peripherique: "SARAH, quelle est la tempétarure du salon" ou "donne moi le statut de la lumiere de la chambre"</li>
+      </ul> 
+    </p>
+    <p>&nbsp;</p>
+    
+    <h4>1. Fonctionnement global</h4>
+    
+	<p><b>1.1 Controle grace au nom du periphérique:</b></p>
+	
+    <p>Vous verrez ci-dessous qu'il suffit de renseigner le nom du module du home center 2 avec exactement la meme orthographe dans le fichier xml pour que le plugin controle votre module. Plus besoin de connaitre l'<b>ID</b> du peripherique. :)</p>
+     
+	<ul>
+        <li>le nom du module = <code>lumiere salon</code>.</li>
+    </ul>
+    <p><img src="/assets/HomeCenter2/images/screenshot1.jpg" /></p>
+	
+    <ul>
+        <li>out.action.dicatation = <code>lumiere salon</code>.</li>
+    </ul>
+	
+	<p><img src="/assets/HomeCenter2/images/screenshot2.jpg" /></p>
+    
+    <p>&nbsp;</p>
+	
+	<p><b>1.2 Detection automatique du type de périphérique:</b></p>
+	<p>Plus besoin non plus de connaitre le type du périphérique</p>
+	<li>Binary_Light</li>
+	<li>Dimmable_Light</li>
+	<li>Binary_Light</li>
+	<li>Humidity_sensor</li>
+	<li>Temperature_sensor</li>
+	<li>multi_level_sensor</li>
+	
+	<p>Le plugin s'adapte au type de périphérique afin de mieux maitriser leurs fonctions.</p>
+	
+    </div>
+    <div class="span4"></div>
+  </div> 
+</div>
