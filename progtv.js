@@ -17,6 +17,7 @@ var config = config.modules.progtv;
 }
 
 var get_programme = function (action, data, callback, config ) {
+console.log("***** connection *****");
 	var http = require('http'),
 	xml2js = require('xml2js');
 	var parser = new xml2js.Parser({trim: true});
@@ -53,7 +54,8 @@ var get_programme = function (action, data, callback, config ) {
 }
 
 var prog = function ( result, data, callback, config) {
-
+console.log("***** recuperation des programmes *****");
+var parle ="";
 	if (!data.time){ 
 		var timevalue = "now"; 
 	}else{
@@ -79,7 +81,7 @@ var prog = function ( result, data, callback, config) {
 					}
 					if (found){
 						if ( parseInt(calcultime(timevalue)) < parseInt(programme.$.stop.substring(0,14)) && parseInt(calcultime(timevalue)) > parseInt(programme.$.start.substring(0,14))){
-							output (callback, convertChannelName(data.channel,result, data, callback, config) + " " + programme.title);
+							parle += convertChannelName(tokens, result, data, callback, config) + " " + programme.title;
 						}
 					}
 				}
@@ -88,9 +90,11 @@ var prog = function ( result, data, callback, config) {
 			}
 			
 		}
+		output (callback, parle);
 }
 
 var liste = function ( result, data, callback, config) {
+console.log("***** recuperation des programmes *****");
 var parle ="";
 	if (!data.time){ 
 		var timevalue = "now"; 
@@ -103,7 +107,8 @@ var parle ="";
 					var tokens = programme.$.channel.split(' ');
 					var found = true;
 						if ( parseInt(calcultime(timevalue)) < parseInt(programme.$.stop.substring(0,14)) && parseInt(calcultime(timevalue)) > parseInt(programme.$.start.substring(0,14))){
-							parle += convertChannelName(tokens, result, data, callback, config) + " " + programme.title + "<br>";
+							
+							parle += "programme pour " + convertChannelName(tokens, result, data, callback, config) + " " + programme.title + " .";
 						}
 			
 				}
@@ -113,7 +118,7 @@ var parle ="";
 }
 
 var updatechannel = function (channel, data, callback, config){
-console.log("***** UPDATE CHANNELS *****");
+console.log("***** update channels *****");
 
 	if (!data.directory){ 
 	console.log('il n\'y a pas de dossier spécifié');
@@ -145,20 +150,20 @@ var output = function ( callback, output ) {
 }
 
 var calcultime = function (dateString){
-var date = new Date();
-var properlyFormatted = date.getFullYear() + ("0" + (date.getMonth() + 1)).slice(-2) + ("0" + date.getDate()).slice(-2);
+var currentTime = new Date();
+var properlyFormatted = currentTime.getFullYear() + ("0" + (currentTime.getMonth() + 1)).slice(-2) + ("0" + currentTime.getDate()).slice(-2);
 
 switch (dateString)
 	{
 	case 'now':
-		return properlyFormatted + date.getHours() + date.getMinutes() + date.getSeconds() ;
+		properlyFormatted = properlyFormatted + ("0" + (currentTime.getHours() + 1)).slice(-2) + ("0" + (currentTime.getMinutes() + 1)).slice(-2) + ("0" + (currentTime.getSeconds() + 1)).slice(-2) ;
 	break;
 	case 'evening':
-		return properlyFormatted + "210000" ; // tous les programmes du soir commencent avant 21heures
+		properlyFormatted = properlyFormatted + "210000" ; // tous les programmes du soir commencent avant 21heures
 	break;
 	default:
 	 }
-
+return properlyFormatted
 }
 
 var output = function ( callback, output ) {

@@ -5,7 +5,8 @@
     <item weight="2">Sarah</item>
     <one-of>
       <item>programme tv<tag>out.action.request="prog"</tag></item>
-	  <item>liste<tag>out.action.request="liste"</tag></item>
+	  <item>programme télé<tag>out.action.request="prog"</tag></item>
+	  <item>liste des programmes<tag>out.action.request="liste"</tag></item>
     </one-of>
 
 <!--  Channels @ -->
