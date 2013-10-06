@@ -16,26 +16,15 @@ var config = config.modules.progtv;
 	}
 }
 
-exports.cron = function (callback, task, SARAH) {
-	var userkey = task.kazeruserkey;
-	var http = require('http'),
-	fs = require('fs');
-	var file = fs.createWriteStream(__dirname + "/tvguide.xml");
-	var req = http.get("http://www.kazer.org/tvguide.xml?u=" + userkey, function(res) {
-		res.pipe(file);
-		console.log("fichier xml recuperer");
-	});
-	
-}
-
 var get_programme = function (action, data, callback, config ) {
 console.log("***** connection *****");
 	var fs = require('fs'),
 	xml2js = require('xml2js');
 	var parser = new xml2js.Parser({trim: true});
 
-	fs.readFile(__dirname + '/tvguide.xml', function(err, data) {
-		parser.parseString(data, function (err, result) {
+	fs.readFile(__dirname + '/tvguide.xml', function(err, dataxml) {
+		parser.parseString(dataxml, function (err, result) {
+				updatechannel(result.tv.channel, data, callback, config);
 				action(result, data, callback, config);		
 			});
 	});
@@ -60,9 +49,10 @@ var parle ="";
 			var found = true;
 			for ( var j = 0; found && j < tokens.length; j++ ) {
 				found = new RegExp(tokens[j],'i').test(text);
-			}
-					
+			}		
+			
 			if ( found ) {
+			
 				for ( var i = 0; i < result.tv.programme.length; i++ ) {
 					var programme = result.tv.programme[i];
 					var tokens = programme.$.channel.split(' ');
@@ -72,7 +62,7 @@ var parle ="";
 					}
 					if (found){
 						if ( parseInt(calcultime(timevalue)) < parseInt(programme.$.stop.substring(0,14)) && parseInt(calcultime(timevalue)) > parseInt(programme.$.start.substring(0,14))){
-							parle += convertChannelName(tokens, result, data, callback, config) + " " + programme.title;
+							parle += "programme pour " + convertChannelName(tokens, result, data, callback, config) + " " + programme.title;
 						}
 					}
 				}
@@ -85,7 +75,7 @@ var parle ="";
 }
 
 var liste = function ( result, data, callback, config) {
-console.log("***** recuperation des programmes *****");
+console.log("***** recuperation des listes programmes *****");
 var parle ="";
 	if (!data.time){ 
 		var timevalue = "now"; 
@@ -110,11 +100,6 @@ var parle ="";
 
 var updatechannel = function (channel, data, callback, config){
 console.log("***** update channels *****");
-
-	if (!data.directory){ 
-	console.log('il n\'y a pas de dossier spécifié');
-	return false; 
-	}
 
 	var fs   = require('fs');
 	var file = data.directory + '/../plugins/progtv/progtv.xml';
@@ -177,4 +162,16 @@ var convertChannelName = function(channelid, result, data, callback, config) {
 			}
 		}
 	}
+}
+
+exports.cron = function (callback, task) {
+	var userkey = task.kazeruserkey;
+	var http = require('http'),
+	fs = require('fs');
+	var file = fs.createWriteStream(__dirname + "/tvguide.xml");
+	var req = http.get("http://www.kazer.org/tvguide.xml?u=" + userkey, function(res) {
+		res.pipe(file);
+		console.log("fichier xml recuperer");
+	});
+	
 }
