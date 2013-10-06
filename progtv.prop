@@ -1,9 +1,17 @@
 {
+"cron" : {
+    "progtv" :   { 
+      "name"       : "progtv",
+      "description": "recupere le fichier xml",
+      "time"       : "0 */720 * * * *",
+	  "kazeruserkey"	   : ""
+    }
+  },
+  
   "modules" : { 
     "progtv":     {
       "description": "Programme tv avec kazer.org",
-      "version"    : "1.O",
-	  "Kazeruserkey"	   : "4cgh4dkv94d6w"
+      "version"    : "1.1"
     }
   }
 }

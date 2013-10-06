@@ -16,40 +16,31 @@ var config = config.modules.progtv;
 	}
 }
 
+exports.cron = function (callback, task, SARAH) {
+	var userkey = task.kazeruserkey;
+	var http = require('http'),
+	fs = require('fs');
+	var file = fs.createWriteStream(__dirname + "/tvguide.xml");
+	var req = http.get("http://www.kazer.org/tvguide.xml?u=" + userkey, function(res) {
+		res.pipe(file);
+		console.log("fichier xml recuperer");
+	});
+	
+}
+
 var get_programme = function (action, data, callback, config ) {
 console.log("***** connection *****");
-	var http = require('http'),
+	var fs = require('fs'),
 	xml2js = require('xml2js');
 	var parser = new xml2js.Parser({trim: true});
 
-	var options = {
-		hostname: 'www.kazer.org',
-		port: 80,
-		path: '/tvguide.xml?u=' + config.Kazeruserkey,
-		method: 'GET'
-	};
-
-	http.get(options, function(res) {
-		res.setEncoding('utf8');
-		var fullResponse = "";
-				
-		res.on('data', function (chunk) {
-			fullResponse = fullResponse+chunk;
-		});
-			
-		res.on('end', function(){
-			parser.parseString(fullResponse, function (err, result) {
-				
-				updatechannel(result.tv.channel, data, callback, config);
-				action(result, data, callback, config);
-				
-	
+	fs.readFile(__dirname + '/tvguide.xml', function(err, data) {
+		parser.parseString(data, function (err, result) {
+				action(result, data, callback, config);		
 			});
-		});
-		
-		}).on('error', function(e) {
-			output(callback, "Une erreur s'est produite: " + e.message);
-		});
+	});
+
+	
 
 }
 
