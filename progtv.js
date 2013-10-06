@@ -107,17 +107,24 @@ console.log("***** update channels *****");
   
 	var replace  = '@ -->\n';
 	replace += '  <one-of>\n';
+	MAJneeded=false;
 	for ( var i = 0; i < channel.length; i++ ) {
 		var tokens = channel[i];
 		replace +='    <item>'+tokens["display-name"]+'<tag>out.action.channel="'+ tokens.$.id+'"</tag></item>\n';
-		console.log('ajout de : ' + tokens["display-name"]);
-
+		try {
+			var regexp2 = new RegExp('<tag>out.action.channel="'+ tokens.$.id+'"</tag>','g');
+			if (!xml.match(regexp2)) { MAJneeded=true; console.log('ajout de : ' + tokens["display-name"]);}
 		}
-			replace += '  </one-of>\n';
+		catch(ex) { }	 	
+	}
+
+	replace += '  </one-of>\n';
 	replace += '<!-- @';
-	var regexp = new RegExp('@[^@]+@','gm');
-	var xml    = xml.replace(regexp,replace);
-	fs.writeFileSync(file, xml, 'utf8');
+	if (MAJneeded) {
+		var regexp = new RegExp('@[^@]+@','gm');
+		var xml    = xml.replace(regexp,replace);
+		fs.writeFileSync(file, xml, 'utf8');
+	}
 }
 
 var output = function ( callback, output ) {
