@@ -306,12 +306,21 @@ exports.cron = function (callback, task) {
 
 http.get(options, function(res) {
   console.log("Got response: " + res.statusCode);
+<<<<<<< HEAD
   if (res.statusCode == 200) {
   var file = fs.createWriteStream(__dirname + "/tvguide.tv");
 		res.pipe(file);
 		console.log("fichier tvguide.tv recuperer");
   }
 
+=======
+
+  res.on("data", function(chunk) {
+		var file = fs.createWriteStream(__dirname + "/tvguide.tv");
+		res.pipe(file);
+		console.log("fichier tvguide.tv recuperer");
+  });
+>>>>>>> 376c9f84c0738a79a676a129a841dea34b0ac1e4
 }).on('error', function(e) {
 	console.log("Erreur: " + e.message);
 	console.log("fichier tvguide.tv non mis a jour");
