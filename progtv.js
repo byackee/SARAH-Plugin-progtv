@@ -299,7 +299,7 @@ exports.cron = function (callback, task) {
 	fs = require('fs');
 	
 	var options = {
-  host: '/www.kazer.org',
+  host: 'www.kazer.org',
   port: 80,
   path: '/tvguide.xml?u=' + userkey
 };
