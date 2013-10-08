@@ -4,39 +4,89 @@
     <tag>out.action=new Object(); </tag>
     <item weight="2">Sarah</item>
     <one-of>
-      <item>programme tv<tag>out.action.request="prog"</tag></item>
-	  <item>programme télé<tag>out.action.request="prog"</tag></item>
-	  <item>liste des programmes<tag>out.action.request="liste"</tag></item>
-    </one-of>
+        <item>
+            <one-of>
+              <item>programme tv<tag>out.action.request="prog"</tag></item>
+              <item>programme télé<tag>out.action.request="prog"</tag></item>
+            </one-of>
 
-<!--  Channels @ -->
+            <!--  Channels @ -->
+            <one-of>
+            <item>ARTE<tag>out.action.channel="ART1.kazer.org"</tag></item>
+            <item>BFM TV<tag>out.action.channel="BFM1.kazer.org"</tag></item>
+            <item>CANAL+<tag>out.action.channel="CAN2.kazer.org"</tag></item>
+            <item>Direct 8<tag>out.action.channel="DIR1.kazer.org"</tag></item>
+            <item>FRANCE 2<tag>out.action.channel="FRA2.kazer.org"</tag></item>
+            <item>FRANCE 3<tag>out.action.channel="FRA3.kazer.org"</tag></item>
+            <item>FRANCE 4<tag>out.action.channel="FRA4.kazer.org"</tag></item>
+            <item>FRANCE 5<tag>out.action.channel="FRA5.kazer.org"</tag></item>
+            <item>FRANCE O<tag>out.action.channel="FRA1.kazer.org"</tag></item>
+            <item>GULLI<tag>out.action.channel="GUL1.kazer.org"</tag></item>
+            <item>I>TELE<tag>out.action.channel="ITL1.kazer.org"</tag></item>
+            <item>M6<tag>out.action.channel="M61.kazer.org"</tag></item>
+            <item>NRJ 12<tag>out.action.channel="NRJ1.kazer.org"</tag></item>
+            <item>TF1<tag>out.action.channel="TF11.kazer.org"</tag></item>
+            <item>TPS STAR<tag>out.action.channel="TPS10.kazer.org"</tag></item>
+            <item>W9<tag>out.action.channel="W91.kazer.org"</tag></item>
+            </one-of>
+            <!-- @     Channels -->
+        </item>
+        <item>liste des programmes<tag>out.action.request="liste"</tag></item>
+		
+		        <item>
+            <one-of>
+              <item>trouve categorie<tag>out.action.request="category"</tag></item>
+            </one-of>
+
+            <!--  Channels C£ -->
   <one-of>
-    <item>ARTE<tag>out.action.channel="ART1.kazer.org"</tag></item>
-    <item>BFM TV<tag>out.action.channel="BFM1.kazer.org"</tag></item>
-    <item>CANAL+<tag>out.action.channel="CAN2.kazer.org"</tag></item>
-    <item>Direct 8<tag>out.action.channel="DIR1.kazer.org"</tag></item>
-    <item>FRANCE 2<tag>out.action.channel="FRA2.kazer.org"</tag></item>
-    <item>FRANCE 3<tag>out.action.channel="FRA3.kazer.org"</tag></item>
-    <item>FRANCE 4<tag>out.action.channel="FRA4.kazer.org"</tag></item>
-    <item>FRANCE 5<tag>out.action.channel="FRA5.kazer.org"</tag></item>
-    <item>FRANCE O<tag>out.action.channel="FRA1.kazer.org"</tag></item>
-    <item>GULLI<tag>out.action.channel="GUL1.kazer.org"</tag></item>
-    <item>I>TELE<tag>out.action.channel="ITL1.kazer.org"</tag></item>
-    <item>M6<tag>out.action.channel="M61.kazer.org"</tag></item>
-    <item>NRJ 12<tag>out.action.channel="NRJ1.kazer.org"</tag></item>
-    <item>TF1<tag>out.action.channel="TF11.kazer.org"</tag></item>
-    <item>TPS STAR<tag>out.action.channel="TPS10.kazer.org"</tag></item>
-    <item>W9<tag>out.action.channel="W91.kazer.org"</tag></item>
+    <item>Film<tag>out.action.category="Film"</tag></item>
+    <item>Documentaire<tag>out.action.category="Documentaire"</tag></item>
+    <item>Concert<tag>out.action.category="Concert"</tag></item>
+    <item>Magazine<tag>out.action.category="Magazine"</tag></item>
+    <item>Fin<tag>out.action.category="Fin"</tag></item>
+    <item>Jeunesse<tag>out.action.category="Jeunesse"</tag></item>
+    <item>Série<tag>out.action.category="Série"</tag></item>
+    <item>Journal<tag>out.action.category="Journal"</tag></item>
+    <item>Débat<tag>out.action.category="Débat"</tag></item>
+    <item>Téléfilm<tag>out.action.category="Téléfilm"</tag></item>
+    <item>Dessin animé<tag>out.action.category="Dessin animé"</tag></item>
+    <item>Sport<tag>out.action.category="Sport"</tag></item>
+    <item>Divers<tag>out.action.category="Divers"</tag></item>
+    <item>Divertissement<tag>out.action.category="Divertissement"</tag></item>
+    <item>Météo<tag>out.action.category="Météo"</tag></item>
+    <item>Talk show<tag>out.action.category="Talk show"</tag></item>
+    <item>Émission<tag>out.action.category="Émission"</tag></item>
+    <item>Fitness<tag>out.action.category="Fitness"</tag></item>
+    <item>Feuilleton<tag>out.action.category="Feuilleton"</tag></item>
+    <item>Loterie<tag>out.action.category="Loterie"</tag></item>
+    <item>Opéra<tag>out.action.category="Opéra"</tag></item>
+    <item>Variétés<tag>out.action.category="Variétés"</tag></item>
+    <item>Tiercé<tag>out.action.category="Tiercé"</tag></item>
+    <item>Spectacle<tag>out.action.category="Spectacle"</tag></item>
+    <item>Clips<tag>out.action.category="Clips"</tag></item>
+    <item>Téléréalité<tag>out.action.category="Téléréalité"</tag></item>
   </one-of>
-<!-- @	 Channels -->
+<!-- C£     Channels -->
+        </item>
+		
+     </one-of>
 
-	<one-of>
-		<item>ce soir<tag>out.action.time="evening"</tag></item>
-		<item>maintenant<tag>out.action.time="now"</tag></item>
-		<item>demain soir<tag>out.action.time="tomorowwevening"</tag></item>
+    <one-of>
+		<item>lundi<tag>out.action.day="Lundi"</tag></item>
+		<item>mardi<tag>out.action.day="Mardi"</tag></item>
+		<item>mercredi<tag>out.action.day="Mercredi"</tag></item>
+		<item>jeudi<tag>out.action.day="Jeudi"</tag></item>
+		<item>vendredi<tag>out.action.day="Vendredi"</tag></item>
+		<item>samedi<tag>out.action.day="Samedi"</tag></item>
+		<item>dimanche<tag>out.action.day="Dimanche"</tag></item>
     </one-of>
-
+	<one-of>
+	<item>soir<tag>out.action.time="evening"</tag></item>
+        <item>maintenant<tag>out.action.time="now"</tag></item>
+	</one-of>
 	
+
     <tag>out.action._attributes.uri="http://127.0.0.1:8080/sarah/progtv";</tag>
   </rule>
 </grammar>
