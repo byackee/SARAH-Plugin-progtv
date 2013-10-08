@@ -69,7 +69,6 @@ var parle ="";
 						console.log(trouve('time', "", programme.$.stop.substring(0,8), timevalue));
 							if (parseInt(trouve('time', "", programme.$.stop.substring(0,8), timevalue)) < parseInt(programme.$.stop.substring(0,14)) && parseInt(trouve('time', "", programme.$.start.substring(0,8), timevalue)) > parseInt(programme.$.start.substring(0,14))){
 								parle +=  trouve('nomjour', '',programme.$.start.substring(0,8),'') + " sur " + convertChannelName(tokens, result, data, callback, config) + " a " + programme.$.start.substring(8,10) + ":" + programme.$.start.substring(10,12) + ", " + programme.category[0]._ + ", " + programme.title + ". ";
-							console.log(programme.$.start.substring(0,14));
 							}
 						}
 					}
@@ -89,7 +88,7 @@ var parle =data.day;
 		var timevalue = "now"; 
 	}else{
 		var timevalue = data.time;
-	}
+	}	
 				for ( var i = 0; i < result.tv.programme.length; i++ ) {
 					var programme = result.tv.programme[i];
 					var tokens = programme.$.channel.split(' ');
@@ -148,13 +147,8 @@ console.log("***** update channels *****");
 	var replace  = '@ -->\n';
 	replace += '  <one-of>\n';
 	MAJneeded=false;
-<<<<<<< HEAD
 	for ( var i = 0; i < programme.length; i++ ) {
 		var tokens = programme[i];
-=======
-	for ( var i = 0; i < channel.length; i++ ) {
-		var tokens = channel[i];
->>>>>>> 1fd384b7c203e074f0d68e6edb0574438ae172ae
 		replace +='    <item>'+tokens["display-name"]+'<tag>out.action.channel="'+ tokens.$.id+'"</tag></item>\n';
 		try {
 			var regexp2 = new RegExp('<tag>out.action.channel="'+ tokens.$.id+'"</tag>','g');
@@ -170,7 +164,6 @@ console.log("***** update channels *****");
 		var xml    = xml.replace(regexp,replace);
 		fs.writeFileSync(file, xml, 'utf8');
 	}
-<<<<<<< HEAD
 }
 
 var updatecategory = function (programme, data, callback, config){
@@ -208,8 +201,6 @@ console.log("***** update category *****");
 		var xml    = xml.replace(regexp,replace);
 		fs.writeFileSync(file, xml, 'utf8');
 	}
-=======
->>>>>>> 1fd384b7c203e074f0d68e6edb0574438ae172ae
 }
 
 var output = function ( callback, output ) {
