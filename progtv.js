@@ -1,35 +1,39 @@
-exports.action = function(data, callback, config){
-	console.log('##### Programme TV #####');
+exports.action = function(data, callback, config, SARAH){
+	console.log('plugin progtv: ##### Programme TV #####');
 
 var config = config.modules.progtv;	
 
 	switch (data.request)
 	{
 	case 'prog':
-	get_programme(prog, data, callback, config );
+	get_programme(prog, data, callback, config, SARAH );
 	break;
 	case 'liste':
-	get_programme(liste, data, callback, config );
+	get_programme(liste, data, callback, config, SARAH );
 	break;
 	case 'category':
-	get_programme(findcategory, data, callback, config );
+	get_programme(findcategory, data, callback, config, SARAH );
+	break;
+	case 'detail':
+	get_programme(detail, data, callback, config, SARAH );
+	break;
+	case 'favoris':
+	get_programme(favoris, data, callback, config, SARAH );
 	break;
 	default:
 	output(callback, "Une erreur s'est produite: ");
 	}
 }
 
-var get_programme = function (action, data, callback, config ) {
-console.log("***** connection *****");
+var get_programme = function (action, data, callback, config, SARAH ) {
+console.log("plugin progtv: connection");
 	var fs = require('fs'),
 	xml2js = require('xml2js');
 	var parser = new xml2js.Parser({trim: true});
 
 	fs.readFile(__dirname + '/tvguide.tv', function(err, dataxml) {
 		parser.parseString(dataxml, function (err, result) {
-				updatechannels(result.tv.channel, data, callback, config);
-				updatecategory(result.tv.programme, data, callback, config);
-				action(result, data, callback, config);		
+				action(result, data, callback, config, SARAH);	
 			});
 	});
 
@@ -38,7 +42,7 @@ console.log("***** connection *****");
 }
 
 var prog = function ( result, data, callback, config) {
-console.log("***** recuperation des programmes *****");
+console.log("plugin progtv: recuperation des programmes");
 var parle ="";
 	if (!data.time){ 
 		var timevalue = "now"; 
@@ -66,9 +70,40 @@ var parle ="";
 					}
 					if (found){
 						if (trouve('numjour', data.day, programme.$.stop.substring(0,8),"")){
-						console.log(trouve('time', "", programme.$.stop.substring(0,8), timevalue));
-							if (parseInt(trouve('time', "", programme.$.stop.substring(0,8), timevalue)) < parseInt(programme.$.stop.substring(0,14)) && parseInt(trouve('time', "", programme.$.start.substring(0,8), timevalue)) > parseInt(programme.$.start.substring(0,14))){
+							if (parseInt(trouve('time', "", programme.$.stop.substring(0,8), timevalue)) < parseInt(programme.$.stop.substring(0,14)) && parseInt(trouve('time', "", programme.$.start.substring(0,8), timevalue)) > parseInt(programme.$.start.substring(0,14))){	
+								var newjson={"request":{}};
+									newjson.request.channel= convertChannelName(tokens, result, data, callback, config);
+									newjson.request.category=programme.category[0]._;
+									newjson.request.description=programme.desc;
+								
+								addtojson(newjson,true);
 								parle +=  trouve('nomjour', '',programme.$.start.substring(0,8),'') + " sur " + convertChannelName(tokens, result, data, callback, config) + " a " + programme.$.start.substring(8,10) + ":" + programme.$.start.substring(10,12) + ", " + programme.category[0]._ + ", " + programme.title + ". ";
+								//LE MESSAGE EST ENVOYE A ASKME POUR ETRE SUR QUIL NOUS CONVIENNE
+								// Build URL
+									var json={"request":{}};
+									json.request.question= parle + 'que veux tu faire? ';
+									json.request.answer=["afficher","description"];
+									json.request.answervalue=['http://127.0.0.1:8080/sarah/xbmc?xbmc=music&action=tv&channelname=' + convertChannelName(tokens, result, data, callback, config) ,'http://127.0.0.1:8080/sarah/progtv?request=detail'];
+									json.request.answercallback=[true,true];
+									json.request.TTSanswer=["Ok.",""];
+									json.request.no_answervalue="http://127.0.0.1:8888/?tts=Action annuler ...";
+									json.request.recall=true;
+									json.request.timeout=30;
+									var url='http://127.0.0.1:8080/sarah/askme';
+									var request = require('request');
+									request({ 
+										'uri': url,
+										'method': 'POST',
+										'json': json,
+										'timeout': 2000,
+									}, function (err, response, body){
+									if (err || response.statusCode != 200) {
+										callback({'tts':'error'});
+										return;
+									}
+								});	
+								callback({});
+								return;
 							}
 						}
 					}
@@ -77,12 +112,11 @@ var parle ="";
 						
 			}
 			
-		}
-		output (callback, parle);
+		}		
 }
 
 var liste = function ( result, data, callback, config) {
-console.log("***** recuperation des listes programmes *****");
+console.log("plugin progtv: recuperation des listes programmes");
 var parle =data.day;
 	if (!data.time){ 
 		var timevalue = "now"; 
@@ -94,7 +128,14 @@ var parle =data.day;
 					var tokens = programme.$.channel.split(' ');
 					if (trouve('numjour', data.day, programme.$.stop.substring(0,8),"")){
 						if (parseInt(trouve('time', "", programme.$.stop.substring(0,8), timevalue)) < parseInt(programme.$.stop.substring(0,14)) && parseInt(trouve('time', "", programme.$.start.substring(0,8), timevalue)) > parseInt(programme.$.start.substring(0,14))){
-							parle += " " + programme.category[0]._ +  " sur " + convertChannelName(tokens, result, data, callback, config) + " a " + programme.$.start.substring(8,10) + ":" + programme.$.start.substring(10,12) + ", " + programme.title + " .";
+							if(data.favoris){
+								if(favoris(convertChannelName(tokens, result, data, callback, config))){
+									parle += " " + programme.category[0]._ +  " sur " + convertChannelName(tokens, result, data, callback, config) + " a " + programme.$.start.substring(8,10) + ":" + programme.$.start.substring(10,12) + ", " + programme.title + " .";
+								}
+							}else{
+								parle += " " + programme.category[0]._ +  " sur " + convertChannelName(tokens, result, data, callback, config) + " a " + programme.$.start.substring(8,10) + ":" + programme.$.start.substring(10,12) + ", " + programme.title + " .";		
+							}
+						
 						}
 					}
 			
@@ -105,16 +146,12 @@ var parle =data.day;
 }
 
 var findcategory = function ( result, data, callback, config) {
-console.log("***** recherche des categories *****");
+console.log("plugin progtv: recherche des categories");
 var parle ="";
 	if (!data.time){ 
 		var timevalue = "now"; 
 	}else{
 		var timevalue = data.time;
-	}
-	
-	if (data.channel){ 
-		parle += "chaine " + convertChannelName(data.channel, result, data, callback, config) + " categorie " + data.category;
 	}
 		
 	var text = data.category;
@@ -135,13 +172,48 @@ var parle ="";
 	output (callback, parle);					
 }
 			
-		
+var detail = function (donnee, data, callback, config, SARAH){
+	var fs = require('fs');
+	var fileJSON =  __dirname + '/progtv.json';
+	json = JSON.parse(fs.readFileSync(fileJSON,'utf8'));	
+	SARAH.speak(json.AllRequest[0].request.description);	
+}
 
-var updatechannels = function (programme, data, callback, config){
-console.log("***** update channels *****");
+function favoris(channel){
+	var response = false;
+	var fs = require('fs');
+	var fileJSON = __dirname + '/progtv.json';
+	if (fs.existsSync(fileJSON)) {json = JSON.parse(fs.readFileSync(fileJSON,'utf8'));}
+		for (var i = 0; i < json.AllRequest[1].request.length; i++) {
+			if (json.AllRequest[1].request[i].channel == channel){
+				response = true;
+			}
+		}	
+	return response;
+}
+
+function addtojson(request,newone){
+	var fs = require('fs');
+	var fileJSON = __dirname + '/progtv.json';
+	// Create new request with data in order:
+	var newrequest={};
+	newrequest.channel="" + request.request.channel;
+	newrequest.description="" + request.request.description;
+	newrequest.category="" + "" + request.request.category;
+	if (fs.existsSync(fileJSON)) {json = JSON.parse(fs.readFileSync(fileJSON,'utf8'));}	
+			json.AllRequest.splice(0,1); 			// Delete existing request
+	if (newone)	
+		{json.AllRequest.unshift({"request":newrequest});}
+	else		
+		{json.AllRequest.push({"request":newrequest});}
+	fs.writeFileSync(fileJSON, JSON.stringify(json, null, 4) , 'utf8');
+} 
+
+var updatechannels = function (programme){
+console.log("plugin progtv: update channels");
 
 	var fs   = require('fs');
-	var file = data.directory + '/../plugins/progtv/progtv.xml';
+	var file =  __dirname + '/progtv.xml';
 	var xml  = fs.readFileSync(file,'utf8');
   
 	var replace  = '@ -->\n';
@@ -152,7 +224,7 @@ console.log("***** update channels *****");
 		replace +='    <item>'+tokens["display-name"]+'<tag>out.action.channel="'+ tokens.$.id+'"</tag></item>\n';
 		try {
 			var regexp2 = new RegExp('<tag>out.action.channel="'+ tokens.$.id+'"</tag>','g');
-			if (!xml.match(regexp2)) { MAJneeded=true; console.log('ajout de : ' + tokens["display-name"]);}
+			if (!xml.match(regexp2)) { MAJneeded=true; console.log('plugin progtv: ajout de ' + tokens["display-name"]);}
 		}
 		catch(ex) { }	 	
 	}
@@ -164,13 +236,14 @@ console.log("***** update channels *****");
 		var xml    = xml.replace(regexp,replace);
 		fs.writeFileSync(file, xml, 'utf8');
 	}
+return;
 }
 
-var updatecategory = function (programme, data, callback, config){
-console.log("***** update category *****");
+var updatecategory = function (programme){
+console.log("plugin progtv: update category");
 
 	var fs   = require('fs');
-	var file = data.directory + '/../plugins/progtv/progtv.xml';
+	var file =  __dirname + '/progtv.xml';
 	var xml  = fs.readFileSync(file,'utf8');
 	var tempcategory = "";
 	
@@ -187,7 +260,7 @@ console.log("***** update category *****");
 			if (!tempcategory.match(regexp3)) { 
 			tempcategory += " " + tokens.category[0]._;
 			replace +='    <item>'+tokens.category[0]._+'<tag>out.action.category="'+ tokens.category[0]._+'"</tag></item>\n';
-			console.log('ajout de : ' + tokens.category[0]._);
+			console.log('plugin progtv: ajout de ' + tokens.category[0]._);
 			}
 			}
 		}
@@ -201,6 +274,7 @@ console.log("***** update category *****");
 		var xml    = xml.replace(regexp,replace);
 		fs.writeFileSync(file, xml, 'utf8');
 	}
+return;
 }
 
 var output = function ( callback, output ) {
@@ -267,7 +341,7 @@ switch (action)
 		return test;
 	break;
 	default:
-	console.log("erreur dans fonction trouve");
+	console.log("plugin progtv: erreur dans fonction trouve");
 	}
 }
 
@@ -297,6 +371,7 @@ exports.cron = function (callback, task) {
 	var userkey = task.kazeruserkey;
 	var http = require('http'),
 	fs = require('fs');
+	xml2js = require('xml2js');
 	
 	var options = {
   host: 'www.kazer.org',
@@ -305,25 +380,26 @@ exports.cron = function (callback, task) {
 };
 
 http.get(options, function(res) {
-  console.log("Got response: " + res.statusCode);
-<<<<<<< HEAD
   if (res.statusCode == 200) {
   var file = fs.createWriteStream(__dirname + "/tvguide.tv");
 		res.pipe(file);
-		console.log("fichier tvguide.tv recuperer");
+		console.log("plugin progtv: fichier tvguide.tv recuperer");
+		
   }
 
-=======
-
-  res.on("data", function(chunk) {
-		var file = fs.createWriteStream(__dirname + "/tvguide.tv");
-		res.pipe(file);
-		console.log("fichier tvguide.tv recuperer");
-  });
->>>>>>> 376c9f84c0738a79a676a129a841dea34b0ac1e4
 }).on('error', function(e) {
-	console.log("Erreur: " + e.message);
-	console.log("fichier tvguide.tv non mis a jour");
+	console.log("plugin progtv: Erreur= " + e.message);
+	console.log("plugin progtv:fichier tvguide.tv non mis a jour");
 });
-	
+
+console.log("plugin progtv: connection");
+		
+		var parser = new xml2js.Parser({trim: true});
+
+		fs.readFile(__dirname + '/tvguide.tv', function(err, dataxml) {
+		parser.parseString(dataxml, function (err, result) {
+			updatechannels(result.tv.channel);
+			updatecategory(result.tv.programme);	
+			});
+	});
 }

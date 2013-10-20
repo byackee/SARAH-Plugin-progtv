@@ -1,8 +1,17 @@
-<grammar version="1.0" xml:lang="fr-FR" mode="voice" root="progtv" xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0">
-  <rule id="progtv" scope="public">
-    <example>Sarah donne moi le programme tv de ce soir</example>
+<grammar version="1.0" xml:lang="fr-FR" mode="voice" root="ruleprogtv" xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0">
+
+<rule id="ruleprogtv" scope="public">
+		<tag>out.action=new Object(); </tag>
+		<item >Sarah</item>
+		<one-of>
+			<item><ruleref uri="#ruleprogtv_prog"/><tag>out.action = rules.ruleprogtv_prog;</tag><tag>out.action._attributes.uri="http://127.0.0.1:8080/sarah/progtv"</tag></item>
+			<item><ruleref uri="#ruleprogtv_detail"/><tag>out.action = rules.ruleprogtv_detail;</tag><tag>out.action._attributes.uri="http://127.0.0.1:8080/sarah/progtv"</tag></item>
+			<item><ruleref uri="#ruleprogtv_favoris"/><tag>out.action = rules.ruleprogtv_favoris;</tag><tag>out.action._attributes.uri="http://127.0.0.1:8080/sarah/progtv"</tag></item>
+		</one-of>
+</rule>  
+	
+  <rule id="ruleprogtv_prog" scope="public">
     <tag>out.action=new Object(); </tag>
-    <item weight="2">Sarah</item>
     <one-of>
         <item>
             <one-of>
@@ -11,34 +20,33 @@
             </one-of>
 
             <!--  Channels @ -->
-            <one-of>
-            <item>ARTE<tag>out.action.channel="ART1.kazer.org"</tag></item>
-            <item>BFM TV<tag>out.action.channel="BFM1.kazer.org"</tag></item>
-            <item>CANAL+<tag>out.action.channel="CAN2.kazer.org"</tag></item>
-            <item>Direct 8<tag>out.action.channel="DIR1.kazer.org"</tag></item>
-            <item>FRANCE 2<tag>out.action.channel="FRA2.kazer.org"</tag></item>
-            <item>FRANCE 3<tag>out.action.channel="FRA3.kazer.org"</tag></item>
-            <item>FRANCE 4<tag>out.action.channel="FRA4.kazer.org"</tag></item>
-            <item>FRANCE 5<tag>out.action.channel="FRA5.kazer.org"</tag></item>
-            <item>FRANCE O<tag>out.action.channel="FRA1.kazer.org"</tag></item>
-            <item>GULLI<tag>out.action.channel="GUL1.kazer.org"</tag></item>
-            <item>I>TELE<tag>out.action.channel="ITL1.kazer.org"</tag></item>
-            <item>M6<tag>out.action.channel="M61.kazer.org"</tag></item>
-            <item>NRJ 12<tag>out.action.channel="NRJ1.kazer.org"</tag></item>
-            <item>TF1<tag>out.action.channel="TF11.kazer.org"</tag></item>
-            <item>TPS STAR<tag>out.action.channel="TPS10.kazer.org"</tag></item>
-            <item>W9<tag>out.action.channel="W91.kazer.org"</tag></item>
-            </one-of>
-            <!-- @     Channels -->
+  <one-of>
+    <item>ARTE<tag>out.action.channel="ART1.kazer.org"</tag></item>
+    <item>BFM TV<tag>out.action.channel="BFM1.kazer.org"</tag></item>
+    <item>CANAL+<tag>out.action.channel="CAN2.kazer.org"</tag></item>
+    <item>Direct 8<tag>out.action.channel="DIR1.kazer.org"</tag></item>
+    <item>FRANCE 2<tag>out.action.channel="FRA2.kazer.org"</tag></item>
+    <item>FRANCE 3<tag>out.action.channel="FRA3.kazer.org"</tag></item>
+    <item>FRANCE 4<tag>out.action.channel="FRA4.kazer.org"</tag></item>
+    <item>FRANCE 5<tag>out.action.channel="FRA5.kazer.org"</tag></item>
+    <item>FRANCE O<tag>out.action.channel="FRA1.kazer.org"</tag></item>
+    <item>GULLI<tag>out.action.channel="GUL1.kazer.org"</tag></item>
+    <item>I>TELE<tag>out.action.channel="ITL1.kazer.org"</tag></item>
+    <item>M6<tag>out.action.channel="M61.kazer.org"</tag></item>
+    <item>NRJ 12<tag>out.action.channel="NRJ1.kazer.org"</tag></item>
+    <item>TF1<tag>out.action.channel="TF11.kazer.org"</tag></item>
+    <item>TPS STAR<tag>out.action.channel="TPS10.kazer.org"</tag></item>
+    <item>W9<tag>out.action.channel="W91.kazer.org"</tag></item>
+  </one-of>
+<!-- @     Channels -->
         </item>
         <item>liste des programmes<tag>out.action.request="liste"</tag></item>
-		
-		        <item>
-            <one-of>
-              <item>trouve categorie<tag>out.action.request="category"</tag></item>
-            </one-of>
+		<item>
+        <one-of>
+          <item>trouve categorie<tag>out.action.request="category"</tag></item>
+        </one-of>
 
-            <!--  Channels C£ -->
+<!--  Categorie C£ -->
   <one-of>
     <item>Film<tag>out.action.category="Film"</tag></item>
     <item>Documentaire<tag>out.action.category="Documentaire"</tag></item>
@@ -67,11 +75,12 @@
     <item>Clips<tag>out.action.category="Clips"</tag></item>
     <item>Téléréalité<tag>out.action.category="Téléréalité"</tag></item>
   </one-of>
+ 
 <!-- C£     Channels -->
         </item>
-		
      </one-of>
-
+	
+	<item repeat="0-1" weight="1.2">favoris<tag>out.action.favoris="true"</tag></item>
     <one-of>
 		<item>lundi<tag>out.action.day="Lundi"</tag></item>
 		<item>mardi<tag>out.action.day="Mardi"</tag></item>
@@ -83,10 +92,52 @@
     </one-of>
 	<one-of>
 	<item>soir<tag>out.action.time="evening"</tag></item>
-        <item>maintenant<tag>out.action.time="now"</tag></item>
+    <item>maintenant<tag>out.action.time="now"</tag></item>
 	</one-of>
-	
-
-    <tag>out.action._attributes.uri="http://127.0.0.1:8080/sarah/progtv";</tag>
+  </rule>
+  
+  <rule id="ruleprogtv_detail" scope="public">
+  <tag>out.action=new Object(); </tag>
+  <one-of>
+  <item>donne moi le detail<tag>out.action.request="detail"</tag></item>
+  <item>detail de la chaine<tag>out.action.request="detail"</tag></item>
+  <item>description de la chaine<tag>out.action.request="detail"</tag></item>
+   </one-of>
+  </rule>
+  
+  <rule id="ruleprogtv_favoris" scope="public">
+  <tag>out.action=new Object(); </tag>
+  
+  <item>
+            <one-of>
+              <item>ajoute<tag>out.action.auction="add"</tag></item>
+              <item>retire<tag>out.action.auction="delete"</tag></item>
+            </one-of>
+			
+      <!--  Channels @ -->
+  <one-of>
+    <item>ARTE<tag>out.action.channel="ART1.kazer.org"</tag></item>
+    <item>BFM TV<tag>out.action.channel="BFM1.kazer.org"</tag></item>
+    <item>CANAL+<tag>out.action.channel="CAN2.kazer.org"</tag></item>
+    <item>Direct 8<tag>out.action.channel="DIR1.kazer.org"</tag></item>
+    <item>FRANCE 2<tag>out.action.channel="FRA2.kazer.org"</tag></item>
+    <item>FRANCE 3<tag>out.action.channel="FRA3.kazer.org"</tag></item>
+    <item>FRANCE 4<tag>out.action.channel="FRA4.kazer.org"</tag></item>
+    <item>FRANCE 5<tag>out.action.channel="FRA5.kazer.org"</tag></item>
+    <item>FRANCE O<tag>out.action.channel="FRA1.kazer.org"</tag></item>
+    <item>GULLI<tag>out.action.channel="GUL1.kazer.org"</tag></item>
+    <item>I>TELE<tag>out.action.channel="ITL1.kazer.org"</tag></item>
+    <item>M6<tag>out.action.channel="M61.kazer.org"</tag></item>
+    <item>NRJ 12<tag>out.action.channel="NRJ1.kazer.org"</tag></item>
+    <item>TF1<tag>out.action.channel="TF11.kazer.org"</tag></item>
+    <item>TPS STAR<tag>out.action.channel="TPS10.kazer.org"</tag></item>
+    <item>W9<tag>out.action.channel="W91.kazer.org"</tag></item>
+  </one-of>
+<!-- @     Channels -->
+<one-of>
+              <item>aux favoris<tag>out.action.request="favoris"</tag></item>
+              <item>a mes favoris<tag>out.action.request="favoris"</tag></item>
+            </one-of>
+   </item>
   </rule>
 </grammar>
