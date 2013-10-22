@@ -46,37 +46,38 @@
           <item>trouve categorie<tag>out.action.request="category"</tag></item>
         </one-of>
 
-<!--  Categorie C£ -->
+<!--  Categorie £ -->
   <one-of>
-    <item>Film<tag>out.action.category="Film"</tag></item>
-    <item>Documentaire<tag>out.action.category="Documentaire"</tag></item>
     <item>Concert<tag>out.action.category="Concert"</tag></item>
+    <item>Journal<tag>out.action.category="Journal"</tag></item>
     <item>Magazine<tag>out.action.category="Magazine"</tag></item>
+    <item>Série<tag>out.action.category="Série"</tag></item>
+    <item>Documentaire<tag>out.action.category="Documentaire"</tag></item>
+    <item>Opéra<tag>out.action.category="Opéra"</tag></item>
+    <item>Film<tag>out.action.category="Film"</tag></item>
     <item>Fin<tag>out.action.category="Fin"</tag></item>
     <item>Jeunesse<tag>out.action.category="Jeunesse"</tag></item>
-    <item>Série<tag>out.action.category="Série"</tag></item>
-    <item>Journal<tag>out.action.category="Journal"</tag></item>
-    <item>Débat<tag>out.action.category="Débat"</tag></item>
     <item>Téléfilm<tag>out.action.category="Téléfilm"</tag></item>
     <item>Dessin animé<tag>out.action.category="Dessin animé"</tag></item>
-    <item>Sport<tag>out.action.category="Sport"</tag></item>
-    <item>Divers<tag>out.action.category="Divers"</tag></item>
     <item>Divertissement<tag>out.action.category="Divertissement"</tag></item>
+    <item>Sport<tag>out.action.category="Sport"</tag></item>
     <item>Météo<tag>out.action.category="Météo"</tag></item>
+    <item>Divers<tag>out.action.category="Divers"</tag></item>
     <item>Talk show<tag>out.action.category="Talk show"</tag></item>
     <item>Émission<tag>out.action.category="Émission"</tag></item>
     <item>Fitness<tag>out.action.category="Fitness"</tag></item>
+    <item>Jeu<tag>out.action.category="Jeu"</tag></item>
     <item>Feuilleton<tag>out.action.category="Feuilleton"</tag></item>
     <item>Loterie<tag>out.action.category="Loterie"</tag></item>
-    <item>Opéra<tag>out.action.category="Opéra"</tag></item>
+    <item>Débat<tag>out.action.category="Débat"</tag></item>
     <item>Variétés<tag>out.action.category="Variétés"</tag></item>
     <item>Tiercé<tag>out.action.category="Tiercé"</tag></item>
     <item>Spectacle<tag>out.action.category="Spectacle"</tag></item>
+    <item>Théâtre<tag>out.action.category="Théâtre"</tag></item>
     <item>Clips<tag>out.action.category="Clips"</tag></item>
     <item>Téléréalité<tag>out.action.category="Téléréalité"</tag></item>
   </one-of>
- 
-<!-- C£     Channels -->
+<!-- £ Categorie -->
         </item>
      </one-of>
 	

@@ -1,0 +1,106 @@
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        jQuery("#plugin-menu .plugin-nav a").click(function () {
+            jQuery("#plugin-menu .content > ul").hide();
+            jQuery("#plugin-menu .plugin-nav ul li").removeClass("active");
+            jQuery(this).parent().addClass("active");
+            jQuery("#" + jQuery(this).data("toggle")).show();
+            return false;
+        });
+    });
+</script>
+<p class="page-header">
+    <span class="lead">Ce plugin gere votre programme tv</span><br/>
+</p>
+Le plugin progtv est un parser XML de fichier EPG genere par le site <a href='www.kazer.org' target=_blank>www.kazer.org</a>.</br>
+Pour utiliser ce plugin il vous faut une clef unique fourni par kazer lors de votre inscription sur le site. Ne vous inquiétez par</br>
+l'inscription se fait en 20 secondes et est gratuite. elle est nécéssaire pour determiner vos favoris tout simplement.
+Avec ce plugin il vous suffit de demander a SARAH le programme télé de pour une chaine, pour un jour et/ou un soit de votre choix.</br>
+Consulter la liste des commandes pour plus de détails.</br>
+</br>
+<div id="plugin-menu" class="row-fluid">
+    <!--Navigation-->
+    <div class="span3 well plugin-nav">
+        <ul class="nav nav-list">
+            <li class="nav-header">Configuration</li>
+			<li><a href="#" data-toggle="plugin-config-progtv">Parametrage</a></li>
+			<li class="#"><a href="" data-toggle="plugin-version-progtv">changelog</a></li>
+            <li><a href="#" data-toggle="plugin-vox-errors">Erreurs</a></li>
+            <li class="nav-header">Commandes vocales</li>
+            <li><a href="#" data-toggle="plugin-vox-examples">Exemples</a></li>
+
+        </ul>
+    </div>
+<!--Version-->
+    <div class="span9 content">
+        <ul class="unstyled" id="plugin-version-progtv">
+		<li><i class="icon-play-circle"></i> Version 1.4:</br>
+			[X] Correction bugs sur ajout automatique des categories.</br>
+			[X] Correction bug lors de la recupération des listes de chaine pour J+7 (enoncait le J et J+7 etant le meme jour).</br>
+			[X] Ajout de la documentation.</br>
+			
+			</li></br>
+			
+            <li><i class="icon-play-circle"></i> Version 1.3:</br>
+			[X] Ajout interaction avec le plugin AskMe.</br>
+				- Fonction: Afficher chaine, enoncer le descriptif de la chaine.</br>
+			[X] Ajout interaction avec le plugin XBMC.</br>
+				- Focntion: lorsque l'ordre afficher chaine est executé, progtv change la chaine XBMC correspondante (si fonction PVR activé sur XBMC).</br>
+			[X] Gestion des favoris pour les listes de programmes.</br>
+			</li></br>
+				
+            <li><i class="icon-play-circle"></i> Version 1.2:</br>
+			[X] Ajout du choix du jour pour le programme tv  de la chaine selectionnée.</br>
+			[X] Ajout de la liste des programmes tv (pour les chaines présentent dans le fichier kazer) du soir pour le jour selectionné.</br>
+			[X] Telechargement des programmes TV par CRON toutes les 12h.</br>
+			[X] Ajout des categories. (pour l'instant sert uniquement a la synthese vocale.</br>
+			[X] Modification du XML uniquement si chaines et ou categories modifiées.</br>
+			</li></br>
+			
+			<li><i class="icon-play-circle"></i> Version 1.0:</br>
+			[X] Recuperation du programme tv pour le jour encours</br>
+			</li></br>
+		</ul>
+ <!--Content-->
+    <div class="span9 content">
+        
+        <!--Config SARAH-->
+        <ul class="unstyled" id="plugin-config-progtv" style="display: none;">
+			Enregistrer vous sur le site <a href='www.kazer.org' target=_blank>www.kazer.org</a> pour obtenir votre clef kazer.</br>
+			Rendez vous dans l'onglet CRON de SARAH, afficher le panneau de configuration du plugin et rentrez votre kazeruserkey (sans espace avant ni apres).</br>
+		</br>
+		</ul>
+        <!--Exemples-->
+        <ul class="unstyled" id="plugin-vox-examples" style="display: none;">
+			<li class="icon-play-circle"></i><strong>Fonction programme une seul chaine:</strong> </br>
+			Cette fonction permet de vocaliser le programme tele pour une chaine et un jour de votre choix.</br>
+            - Sarah, programme tele M6 lundi soir.</br>
+            - Sarah, programme tele M6 maintenant</br>
+			</br>
+			<li class="icon-play-circle"></i><strong>Fonction liste programme toutes chaines:</strong> </br>
+			Cette focntion permet d'obtenir et de vocaliser la liste des programmes télé pour l'ensemble des chaines presentes dans votre liste kazer.</br>
+             - Sarah, liste des programmes lundi soir.</br>
+			 </br>
+			<li class="icon-play-circle"></i><strong>Fonction liste programme pour chaines favorites:</strong> </br>
+			Cette focntion permet d'obtenir et de vocaliser la liste des programmes télé uniquement pour les favoris que vous aurez renseigné dans le fichier progtv.json</br>
+			- Sarah, liste des programmes favoris lundi soir.</br>
+		</br>
+			<li class="icon-play-circle"></i><strong>Fonction recherche categorie:</strong> </br>
+			Cette fonction permet de recherche les chaines tele et de vocaliser le nom du programme pour une categorie souhaitée.</br>
+            - Sarah, recherche categorie film dimanche soir.</br>
+		</br>
+			<li class="icon-play-circle"></i><strong>Integration plugin AskMe et XBMC:</strong> </br>
+			Lors de l'activation de la focntion "programme tele", le plugin askme est activé pour vous permettre d'executer deux actions:.</br>
+				. fonction "afficher": en lien avec le plugin xbmc, cette fonction permet de switcher sur la chaine que vous avez consulté.</br>
+				. fonction "description": vocalise la description du programme.</br>
+			</br>
+			dites simpelment "afficher" ou "description" apre le messsage vocal "que veux tu faire?"</br>
+		</br>
+        </ul>
+        <!--Erreurs-->
+        <ul class="unstyled" id="plugin-vox-errors" style="display: none;">
+            en travaux ;)
+        </ul>
+	
+    </div>
+</div>
